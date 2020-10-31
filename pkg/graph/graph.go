@@ -9,6 +9,10 @@ var ErrorNodeAlreadyInGraph = errors.New("node is already in graph")
 // ErrorNodeNotInGraph means the references node was not in the graph.
 var ErrorNodeNotInGraph = errors.New("node is not in graph")
 
+// ErrorEdgeAlreadyInGraph means an attempt was made to add an edge to a graph
+// that already existed.
+var ErrorEdgeAlreadyInGraph = errors.New("edge is already in graph")
+
 // graphMetadata is metadata for a Graph.
 type graphMetadata struct {
 	name string
@@ -72,4 +76,28 @@ func (g *Graph) RemoveNode(node *Node) error {
 		}
 	}
 	return ErrorNodeNotInGraph
+}
+
+// AddEdge adds an Edge to a graph. If the Edge is already part of the Graph,
+// ErrorEdgeAlreadyInGraph is returned.
+func (g *Graph) AddEdge(edge *Edge) error {
+	for _, existingEdge := range g.edges {
+		if existingEdge == edge {
+			return ErrorEdgeAlreadyInGraph
+		}
+		if existingEdge.isDirectional && edge.isDirectional &&
+			existingEdge.from == edge.from &&
+			existingEdge.to == edge.to {
+			return ErrorEdgeAlreadyInGraph
+		}
+		if !existingEdge.isDirectional && !edge.isDirectional &&
+			((existingEdge.from == edge.from &&
+				existingEdge.to == edge.to) ||
+				(existingEdge.from == edge.to &&
+					existingEdge.to == edge.from)) {
+			return ErrorEdgeAlreadyInGraph
+		}
+	}
+	g.edges = append(g.edges, edge)
+	return nil
 }

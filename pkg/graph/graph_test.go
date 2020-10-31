@@ -162,3 +162,149 @@ func TestRemoveNodeExtended2(t *testing.T) {
 		t.Fatal()
 	}
 }
+
+func TestAddEdgeSelf(t *testing.T) {
+	g := NewGraph()
+	n := NewNode()
+	g.AddNode(n)
+	e := NewEdge(n, n)
+	err := g.AddEdge(e)
+	if err != nil {
+		t.Fatal()
+	}
+	if len(g.edges) != 1 {
+		t.Fatal()
+	}
+	if g.edges[0] != e {
+		t.Fatal()
+	}
+}
+
+func TestAddEdgeSelfTwin(t *testing.T) {
+	g := NewGraph()
+	n := NewNode()
+	g.AddNode(n)
+	e := NewEdge(n, n)
+	err := g.AddEdge(e)
+	if err != nil {
+		t.Fatal()
+	}
+	err = g.AddEdge(e)
+	if err != ErrorEdgeAlreadyInGraph {
+		t.Fatal()
+	}
+}
+
+func TestAddEdgeSelfTwice(t *testing.T) {
+	g := NewGraph()
+	n := NewNode()
+	g.AddNode(n)
+	e := NewEdge(n, n)
+	err := g.AddEdge(e)
+	if err != nil {
+		t.Fatal()
+	}
+	e2 := NewEdge(n, n)
+	err = g.AddEdge(e2)
+	if err != ErrorEdgeAlreadyInGraph {
+		t.Fatal()
+	}
+}
+
+func TestAddEdgeSelfDirectional(t *testing.T) {
+	g := NewGraph()
+	n := NewNode()
+	g.AddNode(n)
+	e := NewEdgeDirectional(n, n)
+	err := g.AddEdge(e)
+	if err != nil {
+		t.Fatal()
+	}
+	if len(g.edges) != 1 {
+		t.Fatal()
+	}
+	if g.edges[0] != e {
+		t.Fatal()
+	}
+	err = g.AddEdge(e)
+	if err != ErrorEdgeAlreadyInGraph {
+		t.Fatal()
+	}
+}
+
+func TestAddEdgeSelfDirectionalTwice(t *testing.T) {
+	g := NewGraph()
+	n := NewNode()
+	g.AddNode(n)
+	e := NewEdgeDirectional(n, n)
+	err := g.AddEdge(e)
+	if err != nil {
+		t.Fatal()
+	}
+	if len(g.edges) != 1 {
+		t.Fatal()
+	}
+	if g.edges[0] != e {
+		t.Fatal()
+	}
+	e2 := NewEdgeDirectional(n, n)
+	err = g.AddEdge(e2)
+	if err != ErrorEdgeAlreadyInGraph {
+		t.Fatal()
+	}
+	if len(g.edges) != 1 {
+		t.Fatal()
+	}
+	if g.edges[0] != e {
+		t.Fatal()
+	}
+}
+
+func TestAddEdge(t *testing.T) {
+	g := NewGraph()
+	n := NewNode()
+	n2 := NewNode()
+	g.AddNode(n)
+	g.AddNode(n2)
+	e := NewEdge(n, n2)
+	err := g.AddEdge(e)
+	if err != nil {
+		t.Fatal()
+	}
+}
+
+func TestAddEdgeBackAndForth(t *testing.T) {
+	g := NewGraph()
+	n := NewNode()
+	n2 := NewNode()
+	g.AddNode(n)
+	g.AddNode(n2)
+	e := NewEdge(n, n2)
+	err := g.AddEdge(e)
+	if err != nil {
+		t.Fatal()
+	}
+	e2 := NewEdge(n2, n)
+	err = g.AddEdge(e2)
+	if err != ErrorEdgeAlreadyInGraph {
+		t.Fatal()
+	}
+}
+
+func TestAddEdgeBackAndForthDirectional(t *testing.T) {
+	g := NewGraph()
+	n := NewNode()
+	n2 := NewNode()
+	g.AddNode(n)
+	g.AddNode(n2)
+	e := NewEdgeDirectional(n, n2)
+	err := g.AddEdge(e)
+	if err != nil {
+		t.Fatal()
+	}
+	e2 := NewEdgeDirectional(n2, n)
+	err = g.AddEdge(e2)
+	if err != nil {
+		t.Fatal()
+	}
+}
