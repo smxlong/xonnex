@@ -54,6 +54,11 @@ func (g *Graph) Metadata() Metadata {
 	return &g.metadata
 }
 
+// Nodes returns the nodes in the graph.
+func (g *Graph) Nodes() []*Node {
+	return g.nodes
+}
+
 // AddNode adds a Node to a Graph. If the Node is already part of the Graph,
 // ErrorNodeAlreadyInGraph is returned.
 func (g *Graph) AddNode(node *Node) error {
@@ -100,4 +105,21 @@ func (g *Graph) AddEdge(edge *Edge) error {
 	}
 	g.edges = append(g.edges, edge)
 	return nil
+}
+
+// Edges returns the edges in the graph.
+func (g *Graph) Edges() []*Edge {
+	return g.edges
+}
+
+// ForEachNode calls the given func f on each node in the graph, serially.
+// If any invocation of f returns false, ForEachNode immediately returns false.
+// Otherwise, it returns true.
+func (g *Graph) ForEachNode(f func(g *Graph, n *Node) bool) bool {
+	for _, node := range g.nodes {
+		if !f(g, node) {
+			return false
+		}
+	}
+	return true
 }
