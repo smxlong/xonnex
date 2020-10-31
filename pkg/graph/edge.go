@@ -5,6 +5,7 @@ type edgeMetadata struct {
 	name string
 }
 
+// Name return the name of the edge.
 func (e *edgeMetadata) Name() string {
 	return e.name
 }

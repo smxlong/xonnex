@@ -5,6 +5,7 @@ type nodeMetadata struct {
 	name string
 }
 
+// Name returns the name of the node.
 func (n *nodeMetadata) Name() string {
 	return n.name
 }
