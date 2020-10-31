@@ -123,3 +123,15 @@ func (g *Graph) ForEachNode(f func(g *Graph, n *Node) bool) bool {
 	}
 	return true
 }
+
+// ForEachEdge calls the given func f on each edge in the graph, serially.
+// If any invocation of f returns false, ForEachEdge immediately returns false.
+// Otherwise, it returns true.
+func (g *Graph) ForEachEdge(f func(g *Graph, e *Edge) bool) bool {
+	for _, edge := range g.edges {
+		if !f(g, edge) {
+			return false
+		}
+	}
+	return true
+}
