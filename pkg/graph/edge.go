@@ -12,7 +12,7 @@ func (e *edgeMetadata) Name() string {
 
 // Edge is a edge in a graph.
 type Edge struct {
-	Data          map[string]interface{}
+	Data          interface{}
 	from, to      *Node
 	isDirectional bool
 	metadata      edgeMetadata

@@ -25,7 +25,7 @@ func (g *graphMetadata) Name() string {
 
 // Graph is a graph of Nodes and Edges.
 type Graph struct {
-	Data     map[string]interface{}
+	Data     interface{}
 	nodes    []*Node
 	edges    []*Edge
 	metadata graphMetadata

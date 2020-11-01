@@ -12,7 +12,7 @@ func (n *nodeMetadata) Name() string {
 
 // Node is a node in a graph.
 type Node struct {
-	Data     map[string]interface{}
+	Data     interface{}
 	metadata nodeMetadata
 }
 
